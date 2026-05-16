@@ -1,0 +1,215 @@
+I have a React taxi booking app called CabsOnline for my Web Development Assignment Part 2.
+
+I want you to rebuild/refactor this project so it is clean, simple, and ready to deploy to GitHub Pages.
+
+Important deployment requirement:
+- The project must be a standard React + Vite project that works on GitHub Pages.
+- Remove Replit-specific workspace setup if it is not needed.
+- Remove Replit-specific Vite plugins such as:
+  - @replit/vite-plugin-runtime-error-modal
+  - @replit/vite-plugin-cartographer
+  - @replit/vite-plugin-dev-banner
+- Avoid package.json dependency versions like "catalog:" or "workspace:*".
+- package.json must use normal npm dependency versions.
+- The app must build successfully using:
+  npm install
+  npm run build
+- The build output should be the normal Vite folder:
+  dist/
+- The app should be deployable to GitHub Pages using GitHub Actions.
+- Add a GitHub Pages workflow file:
+  .github/workflows/deploy.yml
+- The workflow should:
+  1. install dependencies with npm install
+  2. build with npm run build
+  3. deploy the dist folder to GitHub Pages
+- Set up vite.config.ts or vite.config.js correctly for GitHub Pages.
+- Add a clear comment showing where I should put my GitHub repository name in the Vite base path.
+- Example:
+  base: "/REPOSITORY_NAME/"
+- Do not use a backend database.
+- Use browser localStorage for prototype data storage.
+
+Project requirements:
+This is Part 2 of a Web Development Assignment. Part 1 was a PHP/MySQL taxi booking system with:
+- booking.html / booking.js / booking.php
+- admin.html / admin.js / admin.php
+
+Part 2 must refactor and extend the system using React.
+
+Build a modern CabsOnline taxi booking app with these pages/sections:
+
+1. Book Taxi Page
+- Customer can enter:
+  - customer name
+  - phone number
+  - unit number optional
+  - street number
+  - street name
+  - pickup suburb
+  - destination suburb
+  - pickup date
+  - pickup time
+- Validate required fields.
+- Phone number must contain only numbers and be 10 to 12 digits.
+- Pickup date/time must not be earlier than the current date/time.
+- When submitted, generate a booking reference number:
+  BRN00001, BRN00002, BRN00003, etc.
+- Save bookings to localStorage.
+- New bookings must start with status "unassigned".
+- Show confirmation message containing:
+  - booking reference number
+  - pickup date
+  - pickup time
+- Optional: allow customer to download a PDF confirmation receipt.
+
+2. Admin Dashboard Page
+- Show bookings in a table.
+- Table columns:
+  - booking reference number
+  - customer name
+  - phone
+  - pickup suburb
+  - destination suburb
+  - pickup date and time
+  - status
+  - assigned driver
+  - action
+- Add search by booking reference number.
+- If the search box is empty, show urgent bookings only:
+  - status is "unassigned"
+  - pickup date/time is within 2 hours from the current time
+- If a reference number is typed, validate format:
+  - must match BRN followed by five digits, for example BRN00001
+- If invalid, show a clear error.
+- If valid but not found, show "No booking found".
+- Admin can assign an available driver to an unassigned booking.
+- After assigning:
+  - booking status becomes "assigned"
+  - assigned driver is saved on the booking
+  - driver status becomes "Busy"
+  - show confirmation message containing the booking reference number
+
+3. Driver Directory Page
+- Use sample driver data stored in localStorage.
+- Each driver should have:
+  - driver ID, for example D001
+  - name
+  - phone
+  - car model
+  - location/suburb
+  - status: Available or Busy
+- Use Auckland/New Zealand suburbs only, not Australian locations.
+- Example suburbs:
+  - Auckland CBD
+  - Newmarket
+  - Mount Eden
+  - Manukau
+  - North Shore
+- Show drivers in a table or card layout.
+- Add search/filter by:
+  - driver ID
+  - driver name
+  - suburb/location
+  - availability status
+
+4. Track Booking Page
+- Customer enters a booking reference number, for example BRN00001.
+- Show booking details:
+  - booking reference number
+  - customer name
+  - pickup suburb
+  - destination suburb
+  - pickup date and time
+  - current status
+  - assigned driver if available
+  - estimated arrival time
+- If booking is unassigned, show:
+  "Your booking has been received and is waiting for driver assignment."
+- If booking is assigned, show:
+  "Your taxi has been assigned."
+- If no booking is found, show an error message.
+
+Navigation:
+- Create a clear navigation bar with:
+  - Book Taxi
+  - Admin Dashboard
+  - Drivers
+  - Track Booking
+- The app can be a single-page React app with routing.
+
+Design:
+- Clean modern UI.
+- Responsive for desktop and mobile.
+- Use readable fonts, spacing, cards, tables, and buttons.
+- Use clear success and error messages.
+- Make the app look like an improved version of the original Part 1 system.
+- Keep the code understandable for a student.
+
+Data:
+- Use localStorage keys:
+  - cabsOnline_bookings
+  - cabsOnline_drivers
+- On first load, initialise sample drivers.
+- Optional: initialise a few sample bookings for testing.
+- Sample bookings should use Auckland/New Zealand suburbs.
+
+README:
+Create or update README.md with these sections:
+1. Public URL of deployed application
+   - Put placeholder: https://YOUR_USERNAME.github.io/YOUR_REPOSITORY_NAME/
+2. Technology stack used
+3. How to run locally
+   - npm install
+   - npm run dev
+4. How to build
+   - npm run build
+5. How to deploy to GitHub Pages
+   - Explain changing base in vite.config to the repository name
+   - Explain enabling GitHub Pages with GitHub Actions
+6. Microservice API endpoints used
+   - State that no backend API was used because the prototype uses browser localStorage
+7. Feature descriptions
+8. Testing instructions
+   - Include example booking references
+   - Include sample driver IDs
+9. Limitations or known issues
+10. Reflection on AI-supported development process
+
+GitHub Pages workflow:
+Create .github/workflows/deploy.yml with a correct workflow for Vite:
+- runs on push to main
+- uses actions/checkout
+- uses actions/setup-node
+- runs npm install
+- runs npm run build
+- uploads ./dist
+- deploys to GitHub Pages
+
+Final structure should look like:
+cabs-online-part2/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── utils/
+│   ├── App.jsx or App.tsx
+│   ├── main.jsx or main.tsx
+│   └── index.css
+├── index.html
+├── package.json
+├── vite.config.js or vite.config.ts
+├── README.md
+└── dist/ only after running npm run build
+
+Please refactor the current project into this GitHub Pages-ready structure.
+After finishing, tell me:
+1. What files were changed
+2. What files were added
+3. The exact command to run locally
+4. The exact command to build
+5. What I need to change in vite.config before publishing
+6. Where to find the final GitHub Pages URL after deployment
